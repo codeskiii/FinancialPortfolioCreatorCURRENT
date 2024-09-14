@@ -9,14 +9,14 @@ class DataCollector:
         self.wanted_tickers = tickers
         
 
-    def collect_data(self):
+    def collect_data(self) -> list[dict]:
         downloaded_ticers = (yf.Tickers(self.wanted_tickers))
         downloaded_ticers_list = [downloaded_ticers.tickers[(ticer_name)] for ticer_name in downloaded_ticers.tickers]
         to_dump = []
 
         for ticker in downloaded_ticers_list:
             filtered = dict()
-            
+
             filtered["stock_symbol"] = ticker.info["symbol"]
             filtered["stock_history"] = ticker.history(period="max")
             filtered["quarterly_income_stmt"] = ticker.quarterly_income_stmt
