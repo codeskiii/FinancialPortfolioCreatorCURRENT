@@ -7,6 +7,6 @@ if __name__ == "__main__":
     data = data_collector.collect_data()
 
     dataset_builder = DatasetBuilder(data)
-    dataset = dataset_builder.build_dataset()
+    dataset = dataset_builder.build_tickers_datsets()
     #print(dataset)
 
