@@ -13,8 +13,8 @@ class DatasetBuilder:
 
     def build_dataset(self, ticker: dict) -> pd.DataFrame:
         a = ticker["stock_history"]
-        b = pd.melt(ticker["quarterly_income_stmt"]).set_index('variable')
-        c = pd.melt(ticker["quarterly_cashflow"]).set_index('variable')
+        b = pd.melt(ticker["quarterly_income_stmt"]).set_index('variable').rename(columns={'value': 'income_stmt'})
+        c = pd.melt(ticker["quarterly_cashflow"]).set_index('variable').rename(columns={'value': 'cashflow'})
 
         a = a.set_index(a.index.normalize().tz_localize(None)) 
         b = b.set_index(b.index.normalize().tz_localize(None)) 
@@ -27,10 +27,11 @@ class DatasetBuilder:
         out_concat = pd.concat([a, b, c], axis=1)
         out_concat_cleaned = out_concat.dropna(axis=1, how='all')
         out_concat_cleaned.replace(0, pd.NA, inplace=True)
-        out_concat_cleaned.fillna(method='ffill', inplace=True)
+        out_concat_cleaned.backfill(inplace=True)
+        # out_concat_cleaned.fillna(method='backfill', inplace=True)
 
-        ready_ticker = out_concat_cleaned.fillna(0)
-        # DEBUG ONLY
+        # DEBUG ONLY STUFF
         #ready_ticker.to_csv("ready_ticker.csv") 
+        print(out_concat_cleaned.columns)
 
-        return pd.DataFrame()
+        return out_concat_cleaned
