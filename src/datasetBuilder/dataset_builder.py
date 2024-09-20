@@ -27,11 +27,12 @@ class DatasetBuilder:
         out_concat = pd.concat([a, b, c], axis=1)
         out_concat_cleaned = out_concat.dropna(axis=1, how='all')
         out_concat_cleaned.replace(0, pd.NA, inplace=True)
-        out_concat_cleaned.backfill(inplace=True)
-        # out_concat_cleaned.fillna(method='backfill', inplace=True)
+        out_concat_cleaned.bfill(inplace=True)
+        #out_concat_cleaned.fillna(method='backfill', inplace=True)
+        out_concat_cleaned = out_concat_cleaned.fillna(0)
 
         # DEBUG ONLY STUFF
-        #ready_ticker.to_csv("ready_ticker.csv") 
-        print(out_concat_cleaned.columns)
+        out_concat_cleaned.to_csv("ready_ticker.csv") 
+        #print(out_concat_cleaned.columns)
 
         return out_concat_cleaned
