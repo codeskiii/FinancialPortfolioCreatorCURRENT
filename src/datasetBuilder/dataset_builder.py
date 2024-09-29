@@ -32,7 +32,7 @@ class DatasetBuilder:
         out_concat_cleaned = out_concat_cleaned.fillna(0)
 
         # DEBUG ONLY STUFF
-        out_concat_cleaned.to_csv("ready_ticker.csv") 
+        #out_concat_cleaned.to_csv("ready_ticker.csv") 
         #print(out_concat_cleaned.columns)
 
         return out_concat_cleaned

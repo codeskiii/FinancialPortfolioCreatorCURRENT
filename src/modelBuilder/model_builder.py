@@ -1,10 +1,24 @@
 import pandas as pd
 import keras
+from sklearn.preprocessing import StandardScaler
 
 class ModelBuilder:
     def __init__(self) -> None:
-        pass
+        self.scaler = StandardScaler()
 
+    def result_collector(self, model: keras.Sequential, 
+                         ticker_df: pd.DataFrame,
+                         target_column: str = "Target"
+                         ) -> pd.DataFrame:
+        #print(ticker_df.drop(columns=[target_column]).columns)
+        print(ticker_df)
+        X = ticker_df.drop(columns=[target_column])
+        X = self.scaler.fit_transform(X)
+        predictions = model.predict(X)
+        print(predictions)
+        #print(pd.DataFrame(predictions, columns=["Predictions"]))
+        return pd.DataFrame(predictions, columns=["Predictions"])
+    
     def build_model(self, ticker_df: pd.DataFrame,
                     target_column: str = "Target",
                     structure: list[dict] = [
@@ -13,10 +27,11 @@ class ModelBuilder:
                         {"layer_type": "dense", "units": 1}
                     ],
                     optimizer: str = "adam",
-                    loss: str = "mse"
+                    loss: str = "mse",
+                    epochs: int = 10
                     ) -> keras.Sequential:
         
-        model = keras.Sequential([])
+        model = keras.Sequential()
 
         for layer in structure:
             if "activation" in layer:
@@ -25,7 +40,14 @@ class ModelBuilder:
                 model.add(keras.layers.Dense(layer["units"]))
 
         model.compile(optimizer=optimizer, loss=loss)
-        model.fit(ticker_df.drop(columns=[target_column]), ticker_df[target_column], epochs=10)
-        model.summary()
+        
+        X = ticker_df.drop(columns=[target_column])
+        X = self.scaler.fit_transform(X)
 
+        y = ticker_df[target_column]
+        #y.bfill(inplace=True)
+
+        model.fit(X, y, epochs=epochs)
+
+        model.summary()
         return model
