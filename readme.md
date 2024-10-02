@@ -1,1 +1,1 @@
-Powstaje tu narzedzie do tworzenia portfeli inwestycyjnych
+In development
