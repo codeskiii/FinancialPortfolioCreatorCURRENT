@@ -12,4 +12,4 @@ if __name__ == "__main__":
     #print(dataset)
 
     sequential_processor = SequentialProcessor(dataset).process_tickers()
-
+    output_predictions = SequentialProcessor(dataset).process_tickers

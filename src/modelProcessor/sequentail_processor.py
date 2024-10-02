@@ -28,6 +28,8 @@ class SequentialProcessor:
         model = self.model_builder.build_model(dataset_with_target)
         result = self.model_builder.result_collector(model, dataset_with_target)
 
+        return result
+
     def process_tickers(self) -> None:
         for ticker in self.tickers_datasets:
-            self.process_ticker(ticker)
+            self.output_datasets.append(self.process_ticker(ticker))
