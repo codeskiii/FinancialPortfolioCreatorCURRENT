@@ -4,7 +4,7 @@ class DatasetBuilder:
     def __init__(self, tickers: list[dict]) -> None:
         self.tickers_to_analyze = tickers
 
-    def build_tickers_datsets(self) -> list[pd.DataFrame]:
+    def build_tickers_datsets(self) -> list[tuple[str, pd.DataFrame]]:
         processed_tickers = []
         for ticker in self.tickers_to_analyze:
             processed_tickers.append(self.build_dataset(ticker))
@@ -35,4 +35,4 @@ class DatasetBuilder:
         #out_concat_cleaned.to_csv("ready_ticker.csv") 
         #print(out_concat_cleaned.columns)
 
-        return out_concat_cleaned
+        return (ticker.get("stock_symbol"), out_concat_cleaned)
