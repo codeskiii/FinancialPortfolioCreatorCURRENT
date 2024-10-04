@@ -1,0 +1,6 @@
+json
+numpy
+pandas
+keras
+sklearn
+yfinance
