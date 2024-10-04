@@ -14,12 +14,10 @@ pip install -r requirements.txt
 
 ## How to setup config.json
 
-# depedencies
-
 * tickers - tickers to analyze
 
-[!WARNING]
-Tickers must be avialable in yfinance/
+> [!WARNING]
+> Tickers must be avialable in yfinance/
 
 * model structure - currently model can be only build with dense layers ex. 
 
