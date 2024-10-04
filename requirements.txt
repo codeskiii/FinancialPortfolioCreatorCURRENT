@@ -1,6 +1,5 @@
-json
 numpy
 pandas
 keras
-sklearn
+scikit-learn
 yfinance
